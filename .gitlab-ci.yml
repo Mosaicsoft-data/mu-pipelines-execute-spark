@@ -1,0 +1,7 @@
+variables: 
+  MODULE_NAME: 'mu_pipelines_execute_spark'
+
+include:
+  - project: 'realtime-pipelines/cicd/mu-cicd'
+    ref: main
+    file: 'full-pipelines/publish-python-module.yml'

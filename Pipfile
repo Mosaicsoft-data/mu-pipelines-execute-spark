@@ -1,0 +1,26 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[[source]]
+name = "gitlab"
+url = "https://${GITLAB_USER}:${GITLAB_PASSWORD}@gitlab.com/api/v4/groups/100674858/-/packages/pypi/simple"
+verify_ssl = true
+
+[requires]
+python_version = "3.12"
+
+[packages]
+mu-pipelines-interfaces = {version = "==0.1.1", index = "gitlab"}
+
+[dev-packages]
+flit = "*"
+black = "==22.3.0"
+flake8 = "*"
+isort = "*"
+mypy = "*"
+pre-commit = "*"
+pytest = "*"
+pytest-cov = "*"
+pyspark = "*"

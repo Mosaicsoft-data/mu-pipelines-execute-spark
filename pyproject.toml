@@ -1,0 +1,32 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "mu_pipelines_execute_spark"
+authors = [
+    {name = "MosaicSoft", email = "josh.m.reilly@gmail.com"},
+]
+description = "mu_pipelines_execute_spark"
+readme = "README.md"
+requires-python = ">=3.12"
+keywords = ["mu"]
+license = {text = "unlicensed"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+
+[project.scripts]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+
+# ... other project metadata fields as specified in:
+#     https://packaging.python.org/en/latest/specifications/declaring-project-metadata/
