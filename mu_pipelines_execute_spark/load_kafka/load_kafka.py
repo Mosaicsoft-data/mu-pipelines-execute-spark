@@ -3,12 +3,16 @@ from typing import TypedDict, cast
 from mu_pipelines_interfaces.config_types.execute_config import ExecuteConfig
 from mu_pipelines_interfaces.configuration_provider import ConfigurationProvider
 from mu_pipelines_interfaces.execute_module_interface import ExecuteModuleInterface
-from pyspark.sql import DataFrame, DataFrameReader, SparkSession
+from pyspark.sql import DataFrame, SparkSession
 
 from mu_pipelines_execute_spark.context.spark_context import MUPipelinesSparkContext
 import json
-from pyspark.sql.types import StructType, StructField, IntegerType, StringType, TimestampType
+from pyspark.sql.types import (
+    StructType,
+    StructField
+)
 from pyspark.sql.functions import from_json, col, max
+
 
 class AdditionalAttribute(TypedDict):
     key: str
@@ -44,28 +48,41 @@ class LoadKafka(ExecuteModuleInterface):
             schema_json = json.load(f)
 
         # Convert JSON to Spark StructType
-        schema = StructType([
-            StructField(field["name"], eval(field["type"].capitalize() + "Type()"), field["nullable"])
+        schema = StructType(
+            [
+                StructField(
+                    field["name"],
+                    eval(field["type"].capitalize() + "Type()"),
+                    field["nullable"],
+                )
                 for field in schema_json["fields"]
-            ])
+            ]
+        )
 
-        #read offset 
+        # read offset
         startingoffset = json.load(open("offsets.json", "r"))
-        reader = spark.read.format("kafka") \
-            .option("kafka.bootstrap.servers", load_kafka_config["kafka_brokers"]) \
-            .option("subscribe", load_kafka_config["kafka_topic"]) \
-            .option("startingOffsets",startingoffset) \
+        reader = (
+            spark.read.format("kafka")
+            .option("kafka.bootstrap.servers", load_kafka_config["kafka_brokers"])
+            .option("subscribe", load_kafka_config["kafka_topic"])
+            .option("startingOffsets", startingoffset)
             .load()
-        latest_offsets = reader.groupBy("partition").agg(max("offset").alias("max_offset"))
-        #save offset 
+        )
+        latest_offsets = reader.groupBy("partition").agg(
+            max("offset").alias("max_offset")
+        )
+        # save offset
         json.dump(latest_offsets, open("offsets.json", "w"))
 
         # Parse incoming messages
-        parsed_df = reader.selectExpr("CAST(value AS STRING)") \
-            .select(from_json(col("value"), schema).alias("data")) \
+        parsed_df = (
+            reader.selectExpr("CAST(value AS STRING)")
+            .select(from_json(col("value"), schema).alias("data"))
             .select("data.*")
+        )
 
         return parsed_df
+
 
 # https://spark.apache.org/docs/latest/sql-data-sources-csv.html#csv-files
 
