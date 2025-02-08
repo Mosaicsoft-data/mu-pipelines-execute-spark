@@ -3,5 +3,5 @@ variables:
 
 include:
   - project: 'realtime-pipelines/cicd/mu-cicd'
-    ref: $CI_COMMIT_REF_NAME
+    ref: main
     file: 'full-pipelines/publish-python-module.yml'
