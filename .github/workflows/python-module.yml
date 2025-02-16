@@ -1,0 +1,20 @@
+on: [push]
+jobs:
+  call-python-module-build:
+    uses: Mosaicsoft-data/cicd/.github/workflows/build-python-module.yml@main
+    with:
+      module-name: mu_pipelines_execute_spark
+  pypi-publish:
+    name: upload release to PyPI
+    needs: call-python-module-build
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+      - run: ls dist
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+      - run: echo "🍏 This job's status is ${{ job.status }}."
