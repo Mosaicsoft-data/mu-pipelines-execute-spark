@@ -1,12 +1,12 @@
 from typing import TypedDict, cast
-from deprecation import deprecated
 
-from mu_pipelines_execute_spark import __version__
+from deprecation import deprecated
 from mu_pipelines_interfaces.config_types.execute_config import ExecuteConfig
 from mu_pipelines_interfaces.configuration_provider import ConfigurationProvider
 from mu_pipelines_interfaces.execute_module_interface import ExecuteModuleInterface
 from pyspark.sql import DataFrame, DataFrameReader, SparkSession
 
+from mu_pipelines_execute_spark import __version__
 from mu_pipelines_execute_spark.context.spark_context import MUPipelinesSparkContext
 
 
@@ -23,7 +23,12 @@ class LoadCSVConfig(TypedDict):
 
 
 class LoadCSV(ExecuteModuleInterface):
-    @deprecated(removed_in="1.0.0", deprecated_in="0.3.0", current_version=__version__, details="Use IngestCSV")
+    @deprecated(
+        removed_in="1.0.0",
+        deprecated_in="0.3.0",
+        current_version=__version__,
+        details="Use IngestCSV",
+    )
     def __init__(
         self, config: ExecuteConfig, configuration_provider: ConfigurationProvider
     ):
