@@ -16,6 +16,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 dependencies = [
+    "deprecation >=2.0.6",
     "mu-pipelines-interfaces >=0.1.4",
     "pyspark >=3.5.0",
 ]

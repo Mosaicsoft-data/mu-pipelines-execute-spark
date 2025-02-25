@@ -13,12 +13,14 @@ python_version = "3.12"
 
 [packages]
 mu-pipelines-interfaces = ">=0.1.4"
+deprecation = ">=2.0.6"
 
 [dev-packages]
 flit = "*"
 black = "==22.3.0"
 flake8 = "*"
 isort = "*"
+mu-pipelines-configuration-provider = ">=0.1.0"
 mypy = "*"
 pre-commit = "*"
 pytest = "*"
