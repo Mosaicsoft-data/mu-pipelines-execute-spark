@@ -1,4 +1,4 @@
-from typing import TypedDict, cast
+from typing import Required, TypedDict, cast
 
 from mu_pipelines_interfaces.config_types.execute_config import ExecuteConfig
 from mu_pipelines_interfaces.configuration_provider import ConfigurationProvider
@@ -13,8 +13,8 @@ class AdditionalAttribute(TypedDict):
     value: str
 
 
-class IngestCSVConfig(TypedDict):
-    file_location: str
+class IngestCSVConfig(TypedDict, total=False):
+    file_location: Required[str]
     delimiter: str
     quotes: str
     additional_attributes: list[AdditionalAttribute]
