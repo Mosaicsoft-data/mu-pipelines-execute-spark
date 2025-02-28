@@ -27,7 +27,7 @@ class TransformSQL(ExecuteModuleInterface):
         super().__init__(config, configuration_provider)
         sql_config: TransformSQLConfig = cast(TransformSQLConfig, self._config)
         if "sql" in sql_config:
-            self.sql = sql_config["sql"]
+            self.sql_statement = sql_config["sql"]
 
         elif "sql_file_location" in sql_config:
             sql_statement: str | None = (
