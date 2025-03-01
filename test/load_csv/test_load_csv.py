@@ -18,7 +18,7 @@ from mu_pipelines_execute_spark.load_csv.load_csv import LoadCSV
 
 
 @deprecation.fail_if_not_removed
-def test_deprecation():
+def test_deprecation() -> None:
     config: ExecuteConfig = cast(
         ExecuteConfig, dict({"type": "CSVReadCommand", "file_location": "./file.csv"})
     )
